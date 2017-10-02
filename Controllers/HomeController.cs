@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using mongo_sandbox.Models;
+using videogame_impressions.Models;
 
-namespace mongo_sandbox.Controllers
+namespace videogame_impressions.Controllers
 {
     public class HomeController : Controller
     {

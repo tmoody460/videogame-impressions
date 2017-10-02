@@ -1,6 +1,6 @@
 using System;
 
-namespace mongo_sandbox.Models
+namespace videogame_impressions.Models
 {
     public class ErrorViewModel
     {
