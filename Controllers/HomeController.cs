@@ -4,14 +4,34 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using videogame_impressions.Models;
+using VideoGameImpressions.DataAccess;
+using VideoGameImpressions.Models;
+using VideoGameImpressions.Models.Custom;
 
-namespace videogame_impressions.Controllers
+namespace VideoGameImpressions.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IVideoGameAccessor _accessor;
+
+        public HomeController(IVideoGameAccessor accessor)
+        {
+            _accessor = accessor;
+        }
+
         public IActionResult Index()
         {
+            var game = _accessor.AddVideoGame(new VideoGame
+            {
+                Name = "Stanley Parable"
+            });
+
+            ViewData["InsertedID"] = game.Id;
+
+            var retreived = _accessor.GetVideoGame(game.Id);
+
+            ViewData["RetreivedName"] = game.Name;
+
             return View();
         }
 

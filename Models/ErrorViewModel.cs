@@ -1,6 +1,6 @@
 using System;
 
-namespace videogame_impressions.Models
+namespace VideoGameImpressions.Models
 {
     public class ErrorViewModel
     {
