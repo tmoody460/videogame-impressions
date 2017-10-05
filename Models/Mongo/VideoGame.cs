@@ -11,5 +11,8 @@ namespace VideoGameImpressions.Models.Mongo
 
         [BsonElement("name")]
         public string Name { get; set; }
+
+        [BsonElement("publisher")]
+        public string Publisher { get; set; }
     }
 }

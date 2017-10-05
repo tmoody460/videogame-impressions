@@ -36,5 +36,19 @@ namespace VideoGameImpressions.DataAccess
             _context.VideoGames.InsertOne(mongoGame);
             return _mapper.Map<Mongo_VideoGame, VideoGame>(mongoGame);
         }
+
+        public VideoGame EditVideoGame(VideoGame game)
+        {
+            var mongoGame = _mapper.Map<VideoGame, Mongo_VideoGame>(game);
+
+            var filter = Builders<Mongo_VideoGame>.Filter.Eq("Id", mongoGame.Id);
+            var update = Builders<Mongo_VideoGame>.Update
+                                                  .Set(v => v.Name, mongoGame.Name)
+                                                  .Set(v => v.Publisher, mongoGame.Publisher);
+
+            var editedGame = _context.VideoGames.FindOneAndUpdate(filter, update);
+
+            return _mapper.Map<Mongo_VideoGame, VideoGame>(editedGame);
+        }
     }
 }
