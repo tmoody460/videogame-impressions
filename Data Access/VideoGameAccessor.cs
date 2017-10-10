@@ -9,6 +9,8 @@ namespace VideoGameImpressions.DataAccess
     {
         VideoGame AddVideoGame(VideoGame game);
         VideoGame GetVideoGame(string id);
+        VideoGameWithNotes GetVideoGameWithNotes(string id);
+        VideoGameWithNotes AddVideoGameNote(string id, Note note);
     }
 
     public class VideoGameAccessor : IVideoGameAccessor
@@ -49,6 +51,28 @@ namespace VideoGameImpressions.DataAccess
             var editedGame = _context.VideoGames.FindOneAndUpdate(filter, update);
 
             return _mapper.Map<Mongo_VideoGame, VideoGame>(editedGame);
+        }
+
+        public VideoGameWithNotes AddVideoGameNote(string id, Note note)
+        {
+            var mongoNote = _mapper.Map<Note, Mongo_Note>(note);
+
+            var filter = Builders<Mongo_VideoGame>.Filter.Eq("Id", id);
+            var update = Builders<Mongo_VideoGame>.Update.Push<Mongo_Note>(v => v.Notes, mongoNote);
+
+            var editedGame = _context.VideoGames.FindOneAndUpdate(filter, update, new FindOneAndUpdateOptions<Mongo_VideoGame>()
+            {
+                ReturnDocument = ReturnDocument.After
+            });
+
+            return _mapper.Map<Mongo_VideoGame, VideoGameWithNotes>(editedGame);
+        }
+
+        public VideoGameWithNotes GetVideoGameWithNotes(string id)
+        {
+            var filter = Builders<Mongo_VideoGame>.Filter.Eq("Id", id);
+            var mongoGame = _context.VideoGames.Find(filter).FirstOrDefault();
+            return _mapper.Map<Mongo_VideoGame, VideoGameWithNotes>(mongoGame);
         }
     }
 }

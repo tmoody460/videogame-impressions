@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -14,5 +15,9 @@ namespace VideoGameImpressions.Models.Mongo
 
         [BsonElement("publisher")]
         public string Publisher { get; set; }
+
+        [BsonElement("notes")]
+        public List<Mongo_Note> Notes { get; set; } = new List<Mongo_Note>();
+
     }
 }

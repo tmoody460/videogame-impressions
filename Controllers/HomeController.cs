@@ -21,16 +21,10 @@ namespace VideoGameImpressions.Controllers
 
         public IActionResult Index()
         {
-            var game = _accessor.AddVideoGame(new VideoGame
+            var retreived = _accessor.AddVideoGameNote("59dc1fc745ec230b68b0ac20", new Note
             {
-                Name = "Stanley Parable"
+                Content = "It's like Skyrim, but more focused. Less bullshit."
             });
-
-            ViewData["InsertedID"] = game.Id;
-
-            var retreived = _accessor.GetVideoGame(game.Id);
-
-            ViewData["RetreivedName"] = game.Name;
 
             return View();
         }
